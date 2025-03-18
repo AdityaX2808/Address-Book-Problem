@@ -1,3 +1,4 @@
+from addressbookmain import AddressBookMain
 from addressbook import AddressBook
 from contacts import Contact
 from validation import (
@@ -6,11 +7,44 @@ from validation import (
     validate_phone_number, validate_email
 )
 
+
 def main():
     print("\nWelcome to the Address Book System!")
 
-    book = AddressBook("AddressBook")
+    Mainbook = AddressBookMain()
 
+    while True:
+        print("\nOptions: ")
+        print("1. Create Address Book")
+        print("2. Select Address Books")
+        print("3. Display Address Book")
+        print("4. Delete Address Book")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+           name = input("Enter new Address Book name: ").strip()
+           Mainbook.add_address_book(name)
+
+        elif choice == "2":
+            name = input("Enter the  Address Book to select: ").strip()
+            book = Mainbook.select_address_book(name)
+
+            if book:
+                manage_contact(book)
+
+        elif choice == "3":
+            Mainbook.display_address_books()
+
+        elif choice  == "4":
+            name = input("Enter the Address Book to delete: ").strip()
+            Mainbook.delete_address_book(name)
+
+        elif choice =="5":
+            exit("\nExiting the program, Goodbye!!!.....")
+
+def  manage_contact(book):
     while True:
         print("\nOptions:")
         print("1. Add Contact")
@@ -46,8 +80,9 @@ def main():
             book.delete_contact(input("Enter the full name of the contact you want to delete: ").strip().title())
 
         elif choice == "5":
-            exit("\nExiting the program, Goodbye!!!.....")
+            break
 
 if __name__ == "__main__":
     main()
+
 

@@ -1,39 +1,34 @@
 from contacts import Contact
 
+
 class AddressBook:
-    def __init__(self, name):
-        self.contacts = {}
+    def __init__(self , name):
         self.name = name
+        self.contacts = {}
 
-    def add_contact(self, contact):
+
+    def add_contact(self,  contact):
         """Adds a new contact to the address book using full name as a unique key."""
-        full_name = contact.full_name.title()
-
-        if full_name in self.contacts:
-            print(f"\n{full_name} is already in '{self.name}' Address Book.")
+        # Check if the contact already exists
+        if contact.full_name in self.contacts:
+            print(f"\n{contact.full_name} is already in '{self.name}' Address Book.")
         else:
-            self.contacts[full_name] = contact
-            print(f"\nContact '{full_name}' added successfully!")
+            self.contacts[contact.full_name] = contact  # Store contact object
+            print(f"\nContact '{contact.full_name}' added successfully!")
 
-    def display_contacts(self):
-        """Displays all contacts in the address book."""
+    def  display_contacts(self):
         if not self.contacts:
-            print("\nNo contacts to display.")
+            print("\nNo contacts to display")
         else:
-            print(f"\nContacts in '{self.name}' Address Book:")
+            print(f"\nContacts in {self.name} Address Book:")
             for contact in self.contacts.values():
-                print(f"\nFull Name: {contact.full_name.title()}")
-                print(f"Address: {contact.address.capitalize()}")
-                print(f"City: {contact.city.capitalize()}")
-                print(f"State: {contact.state.capitalize()}")
-                print(f"Zip Code: {contact.zip_code}")
-                print(f"Phone Number: {contact.phone_number}")
-                print(f"Email: {contact.email}")
-                print("-" * 30)
+                contact_info = vars(contact)
+                for key , value in (contact_info.items()):
+                    print(f"{key}: {value}")
+                print(f"\n {'-' * 30}")
 
     def edit_contact(self , full_name):
         """Edit an existing contact using full name as a unique key."""
-        full_name = full_name.title()
 
         if full_name not in self.contacts:
             print(f"\nContact '{full_name}' not found!")
@@ -52,12 +47,12 @@ class AddressBook:
         contact.phone_number = input(f"New Phone Number ({contact.phone_number}): ") or contact.phone_number
         contact.email = input(f"New Email ({contact.email}): ") or contact.email
 
-        print(f"\nContact '{full_name}' updated successfully!")
-
-        # Update the key in the dictionary if the full name has changed
-        new_full_name = contact.full_name.title()
+        # Update dictionary key if name changes
+        new_full_name = contact.full_name  # Uses the updated property
         if new_full_name != full_name:
             self.contacts[new_full_name] = self.contacts.pop(full_name)
+
+        print(f"\nContact '{new_full_name}' updated successfully!")
 
     def delete_contact(self , full_name):
         """Delete an existing contact using full name as a unique key."""
