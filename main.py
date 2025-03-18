@@ -1,4 +1,4 @@
-from addressbook import AddressBookMain
+from addressbook import AddressBook
 from contacts import Contact
 from validation import (
     validate_first_name, validate_last_name, validate_address,
@@ -9,13 +9,14 @@ from validation import (
 def main():
     print("\nWelcome to the Address Book System!")
 
-    book = AddressBookMain("Address Book 1")
+    book = AddressBook("AddressBook")
 
     while True:
         print("\nOptions:")
         print("1. Add Contact")
         print("2. Show Contacts")
-        print("3. Exit")
+        print("3. Edit Contact")
+        print("4. Exit")
 
         choice = input("\nEnter your choice: ").strip()
 
@@ -37,7 +38,10 @@ def main():
         elif choice == "2":
             book.display_contacts()
 
-        elif choice == "3":
+        elif choice =="3":
+            book.edit_contact(input("Enter the full name of the contact you want to edit: ").strip().title())
+
+        elif choice == "4":
             exit("\nExiting the program, Goodbye!!!.....")
 
 if __name__ == "__main__":
