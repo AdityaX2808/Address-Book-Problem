@@ -58,3 +58,12 @@ class AddressBook:
         new_full_name = contact.full_name.title()
         if new_full_name != full_name:
             self.contacts[new_full_name] = self.contacts.pop(full_name)
+
+    def delete_contact(self , full_name):
+        """Delete an existing contact using full name as a unique key."""
+        if full_name not in self.contacts:
+            print(f"\nContact '{full_name}' not found!")
+            return
+
+        del self.contacts[full_name]
+        print(f"\nContact '{full_name}' deleted successfully!")

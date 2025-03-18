@@ -16,7 +16,8 @@ def main():
         print("1. Add Contact")
         print("2. Show Contacts")
         print("3. Edit Contact")
-        print("4. Exit")
+        print("4. Delete Contact")
+        print("5. Exit")
 
         choice = input("\nEnter your choice: ").strip()
 
@@ -38,10 +39,13 @@ def main():
         elif choice == "2":
             book.display_contacts()
 
-        elif choice =="3":
+        elif choice == "3":
             book.edit_contact(input("Enter the full name of the contact you want to edit: ").strip().title())
 
         elif choice == "4":
+            book.delete_contact(input("Enter the full name of the contact you want to delete: ").strip().title())
+
+        elif choice == "5":
             exit("\nExiting the program, Goodbye!!!.....")
 
 if __name__ == "__main__":
