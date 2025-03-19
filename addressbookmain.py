@@ -37,3 +37,20 @@ class AddressBookMain:
             print(f"\n'{name}' Address Book deleted successfully!")
         else:
             print(f"\n'{name}' Address Book not found!")
+
+#create class to search person on the basis of city or state
+class SearchPerson(AddressBookMain):
+    def search_person(self, city):
+        """this function searches a person in all address books by city or state"""
+        found = False
+        for address_book in self.addressbook.values():
+            for contact in address_book.contacts.values():
+                if city == contact.city:
+                    print(f"\nContact found in '{address_book.name}' Address Book:")
+                    contact_info = vars(contact)
+                    for key, value in contact_info.items():
+                        print(f"{key}: {value}")
+                    print(f"\n {'-' * 30}")
+                    found = True
+        if not found:
+            print("\nContact not found in any Address Book.")

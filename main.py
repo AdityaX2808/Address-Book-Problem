@@ -1,4 +1,4 @@
-from addressbookmain import AddressBookMain
+from addressbookmain import AddressBookMain , SearchPerson
 from addressbook import AddressBook
 from contacts import Contact
 from validation import (
@@ -12,6 +12,7 @@ def main():
     print("\nWelcome to the Address Book System!")
 
     Mainbook = AddressBookMain()
+    Mainbook = SearchPerson()
 
     while True:
         print("\nOptions: ")
@@ -19,7 +20,8 @@ def main():
         print("2. Select Address Books")
         print("3. Display Address Book")
         print("4. Delete Address Book")
-        print("5. Exit")
+        print("5. Search Contact Using City")
+        print("6. Exit")
 
         choice = input("Enter your choice: ").strip()
 
@@ -41,7 +43,11 @@ def main():
             name = input("Enter the Address Book to delete: ").strip()
             Mainbook.delete_address_book(name)
 
-        elif choice =="5":
+        elif choice == "5":
+            city = input("Enter the city name to search contacts: ").strip()
+            Mainbook.search_person(city)
+
+        elif choice =="6":
             exit("\nExiting the program, Goodbye!!!.....")
 
 def  manage_contact(book):
