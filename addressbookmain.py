@@ -49,6 +49,7 @@ class SearchPerson(AddressBookMain):
                     found_contacts.append((address_book.name , contact))
 
         if found_contacts:
+            print(f"\nTotal Contacts Found in '{city}': {len(found_contacts)}")
             for address_book_name , contact in found_contacts:
                 print(f"\nAddress Book: {address_book_name}")
                 contact_info = vars(contact)
