@@ -42,15 +42,16 @@ class AddressBookMain:
 class SearchPerson(AddressBookMain):
     def search_person(self, city):
         """this function searches a person in all address books by city or state"""
-        found = False
+        found_contacts = []
         for address_book in self.addressbook.values():
             for contact in address_book.contacts.values():
-                if city == contact.city:
-                    print(f"\nContact found in '{address_book.name}' Address Book:")
-                    contact_info = vars(contact)
-                    for key, value in contact_info.items():
-                        print(f"{key}: {value}")
-                    print(f"\n {'-' * 30}")
-                    found = True
-        if not found:
-            print("\nContact not found in any Address Book.")
+                if city.lower() in contact.city.lower():
+                    found_contacts.append((address_book.name , contact))
+
+        if found_contacts:
+            for address_book_name , contact in found_contacts:
+                print(f"\nAddress Book: {address_book_name}")
+                contact_info = vars(contact)
+                for key , value in contact_info.items():
+                    print(f"{key}: {value}")
+                print(f"\n {'-' * 30}")
