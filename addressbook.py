@@ -12,9 +12,17 @@ class AddressBook:
         # Check if the contact already exists
         if contact.full_name in self.contacts:
             print(f"\n{contact.full_name} is already in '{self.name}' Address Book.")
+
         else:
             self.contacts[contact.full_name] = contact  # Store contact object
             print(f"\nContact '{contact.full_name}' added successfully!")
+
+        #removing duplicates
+        for existing_contact  in self.contacts.values():
+            if existing_contact  ==  contact.full_name:
+                print(f"\n{contact.full_name} is already in '{self.name}' Address Book.")
+                break
+
 
     def  display_contacts(self):
         if not self.contacts:
