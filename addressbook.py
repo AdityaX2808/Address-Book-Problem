@@ -1,42 +1,35 @@
 import os
+import json
 from contacts import Contact
 
 class AddressBook:
     def __init__(self, name):
         self.name = name
         self.contacts = {}
-        self.filename = f"data/txt/{name}.txt"
+        self.filename = f"data/json/{name}.json"  # Unique JSON file for each address book
 
+        # Ensure the directory structure exists
         os.makedirs(os.path.dirname(self.filename), exist_ok=True)
-        self.load_from_file()
+
+        self.load_from_file()  # Load contacts when initializing
 
     def save_to_file(self):
-        """Saves all contacts to a CSV file."""
-        with open(self.filename, mode="w") as file:
-            for contact in self.contacts.values():
-                file.write(f"{contact.first_name},{contact.last_name},"
-                           f"{contact.address},{contact.city},{contact.state},"
-                           f"{contact.zip_code},"
-                           f"{contact.phone_number},"
-                           f"{contact.email}\n")
+        """Saves all contacts to the JSON file."""
+        with open(self.filename, "w") as file:
+            json.dump([contact.__dict__ for contact in self.contacts.values()], file, indent=4)
         print(f"\nContacts saved to '{self.filename}'.")
 
     def load_from_file(self):
-        """Loads contacts from a TXT file if it exists."""
+        """Loads contacts from the JSON file if it exists."""
         if not os.path.exists(self.filename):
             print(f"\nNo existing contacts found for '{self.name}'. Starting fresh.")
             return
 
-        with open(self.filename, mode="r") as file:
-            lines = file.readlines()
-            if len(lines) <= 1:
-                return  # Only header exists, no contacts
-
-            for line in lines[1:]:  # Skip header row
-                data = line.strip().split(",")
-                if len(data) == 8:
-                    contact = Contact(*data)
-                    self.contacts[contact.full_name] = contact
+        with open(self.filename, "r") as file:
+            data = json.load(file)
+            for entry in data:
+                contact = Contact(**entry)
+                self.contacts[contact.full_name] = contact
         print(f"\nContacts loaded from '{self.filename}'.")
 
     def add_contact(self, contact):

@@ -1,0 +1,22 @@
+[
+    {
+        "first_name": "aditya",
+        "last_name": "kumar",
+        "address": "abode Valley",
+        "city": "chennai",
+        "state": "tamil nade",
+        "zip_code": "603203",
+        "phone_number": "7845126653",
+        "email": "aditya@gmail.com"
+    },
+    {
+        "first_name": "Rupesh",
+        "last_name": "Sahoo",
+        "address": "abode valley",
+        "city": "chennai",
+        "state": "tamil nadu",
+        "zip_code": "603203",
+        "phone_number": "7845125568",
+        "email": "rupesh@gmail.com"
+    }
+]
