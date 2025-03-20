@@ -57,7 +57,8 @@ def  manage_contact(book):
         print("2. Show Contacts")
         print("3. Edit Contact")
         print("4. Delete Contact")
-        print("5. Exit")
+        print("5. Sort by name")
+        print("6. Exit")
 
         choice = input("\nEnter your choice: ").strip()
 
@@ -86,6 +87,9 @@ def  manage_contact(book):
             book.delete_contact(input("Enter the full name of the contact you want to delete: ").strip().title())
 
         elif choice == "5":
+            book.sort_contacts_by_name()
+
+        elif choice == "6":
             break
 
 if __name__ == "__main__":

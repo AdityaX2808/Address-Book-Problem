@@ -23,18 +23,35 @@ class AddressBook:
                 print(f"\n{contact.full_name} is already in '{self.name}' Address Book.")
                 break
 
+    def sort_contacts_by_name(self):
+        """Sorts contacts alphabetically by full name and displays them."""
+        sorted_contacts = sorted(self.contacts.values(), key=lambda contact: contact.full_name)
+
+        if not sorted_contacts:
+            print("\nNo contacts to display.")
+            return
+
+        print("\nContacts Sorted by Name:")
+        for contact in sorted_contacts:
+            print(f"{contact.first_name} {contact.last_name}\n"
+                  f"{contact.address}\n"
+                  f"{contact.city}, {contact.state} {contact.zip_code}\n"
+                  f"{contact.phone_number}\n"
+                  f"{contact.email}\n")
+        print(f"\n{'-' * 30}")
+
 
     def  display_contacts(self):
         if not self.contacts:
-            print("\nNo contacts to display")
-        else:
-            print(f"\nContacts in {self.name} Address Book:")
-            sorted_contacts = sorted(self.contacts.values() , key = lambda x: x.first_name)
-            for contact in self.contacts.values():
-                contact_info = vars(contact)
-                for key , value in (contact_info.items()):
-                    print(f"{key}: {value}")
-                print(f"\n {'-' * 30}")
+            print("\nNo contacts to display.")
+            return
+
+        print(f"\nContacts in {self.name} Address Book:")
+        for contact in self.contacts.values():
+            contact_info = vars(contact)
+            for key , value in contact_info.items():
+                print(f"{key}: {value}")
+            print(f"\n{'-' * 30}")
 
     def edit_contact(self , full_name):
         """Edit an existing contact using full name as a unique key."""
