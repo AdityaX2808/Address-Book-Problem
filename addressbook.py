@@ -1,15 +1,20 @@
-from contacts import Contact
 import csv
+import os
+from contacts import Contact
 
 class AddressBook:
-    def __init__(self, name, filename="address_book.csv"):
+    def __init__(self, name):
         self.name = name
         self.contacts = {}
-        self.filename = filename
-        self.load_from_file()  # Load contacts from CSV when initializing
+        self.filename = f"data/csv/{name}.csv"  # Unique CSV for each address book
+
+        # Ensure the directory structure exists
+        os.makedirs(os.path.dirname(self.filename), exist_ok=True)
+
+        self.load_from_file()  # Load contacts when initializing
 
     def save_to_file(self):
-        """Saves all contacts to a CSV file."""
+        """Saves all contacts to the CSV file."""
         with open(self.filename, mode="w", newline="") as file:
             writer = csv.writer(file)
             writer.writerow(["First Name", "Last Name", "Address", "City", "State", "Zip Code", "Phone Number", "Email"])
@@ -20,18 +25,19 @@ class AddressBook:
         print(f"\nContacts saved to '{self.filename}'.")
 
     def load_from_file(self):
-        """Loads contacts from a CSV file into the address book."""
-        try:
-            with open(self.filename, mode="r", newline="") as file:
-                reader = csv.reader(file)
-                next(reader)  # Skip header row
-                for row in reader:
-                    if len(row) == 8:
-                        contact = Contact(*row)
-                        self.contacts[contact.full_name] = contact
-            print(f"\nContacts loaded from '{self.filename}'.")
-        except FileNotFoundError:
-            print("\nNo saved contacts found. Starting fresh.")
+        """Loads contacts from the CSV file if it exists."""
+        if not os.path.exists(self.filename):
+            print(f"\nNo existing contacts found for '{self.name}'. Starting fresh.")
+            return
+
+        with open(self.filename, mode="r", newline="") as file:
+            reader = csv.reader(file)
+            next(reader, None)  # Skip header row
+            for row in reader:
+                if len(row) == 8:
+                    contact = Contact(*row)
+                    self.contacts[contact.full_name] = contact
+        print(f"\nContacts loaded from '{self.filename}'.")
 
     def add_contact(self, contact):
         """Adds a new contact and saves to CSV."""
@@ -40,7 +46,7 @@ class AddressBook:
         else:
             self.contacts[contact.full_name] = contact
             print(f"\nContact '{contact.full_name}' added successfully!")
-            self.save_to_file()  # Save changes
+            self.save_to_file()
 
     def edit_contact(self, full_name):
         """Edits an existing contact and saves to CSV."""
@@ -67,7 +73,7 @@ class AddressBook:
             self.contacts[new_full_name] = self.contacts.pop(full_name)
 
         print(f"\nContact '{new_full_name}' updated successfully!")
-        self.save_to_file()  # Save changes
+        self.save_to_file()
 
     def delete_contact(self, full_name):
         """Deletes a contact and saves to CSV."""
@@ -77,7 +83,7 @@ class AddressBook:
 
         del self.contacts[full_name]
         print(f"\nContact '{full_name}' deleted successfully!")
-        self.save_to_file()  # Save changes
+        self.save_to_file()
 
     def sort_contacts_by_name(self):
         """Sorts contacts alphabetically by full name and displays them."""
