@@ -40,6 +40,32 @@ class AddressBook:
                   f"{contact.email}\n")
         print(f"\n{'-' * 30}")
 
+    def sort_contacts_by_city_zip_state(self, choice):
+        """sorts contacts by city , zip code , state"""
+        if not self.contacts:
+            print("\nNo contacts to display.")
+            return
+        if choice == "1":
+            sorted_contacts = sorted(self.contacts.values(), key=lambda contact: contact.city)
+
+        elif choice == "2":
+            sorted_contacts = sorted(self.contacts.values(), key=lambda contact: contact.zip_code)
+
+        elif choice == "3":
+            sorted_contacts = sorted(self.contacts.values(), key=lambda contact: contact.state)
+
+        else:
+            print("\nInvalid choice! Please enter 1, 2, or 3.")
+            return
+
+        for contact in sorted_contacts:
+            print(f"{contact.first_name} {contact.last_name}\n"
+                  f"{contact.address}\n"
+                  f"{contact.city}, {contact.state} {contact.zip_code}\n"
+                  f"{contact.phone_number}\n"
+                  f"{contact.email}\n")
+            print(f"\n{'-' * 30}")
+
 
     def  display_contacts(self):
         if not self.contacts:

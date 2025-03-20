@@ -58,7 +58,8 @@ def  manage_contact(book):
         print("3. Edit Contact")
         print("4. Delete Contact")
         print("5. Sort by name")
-        print("6. Exit")
+        print("6. Sort by City State or Zip")
+        print("7. Exit")
 
         choice = input("\nEnter your choice: ").strip()
 
@@ -89,7 +90,11 @@ def  manage_contact(book):
         elif choice == "5":
             book.sort_contacts_by_name()
 
-        elif choice == "6":
+        elif choice  == "6":
+            sort_by = input("Enter 1 for sort by City, 2 for sort by Zip Code, 3 for sort by State: ").strip()
+            book.sort_contacts(sort_by)
+
+        elif choice == "7":
             break
 
 if __name__ == "__main__":
