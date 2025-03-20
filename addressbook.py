@@ -29,6 +29,7 @@ class AddressBook:
             print("\nNo contacts to display")
         else:
             print(f"\nContacts in {self.name} Address Book:")
+            sorted_contacts = sorted(self.contacts.values() , key = lambda x: x.first_name)
             for contact in self.contacts.values():
                 contact_info = vars(contact)
                 for key , value in (contact_info.items()):
