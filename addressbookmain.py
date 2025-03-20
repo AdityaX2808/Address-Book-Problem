@@ -40,19 +40,24 @@ class AddressBookMain:
 
 #create class to search person on the basis of city or state
 class SearchPerson(AddressBookMain):
-    def search_person(self, city):
+    def __init__(self , city , mainbook):
+        super().__init__()
+        self.city = city
+        self.addressbook = mainbook.addressbook
+
+    def search_person(self):
         """this function searches a person in all address books by city or state"""
         found_contacts = []
         for address_book in self.addressbook.values():
             for contact in address_book.contacts.values():
-                if city.lower() in contact.city.lower():
+                if self.city.lower() in contact.city.lower():
                     found_contacts.append((address_book.name , contact))
 
         if found_contacts:
-            print(f"\nTotal Contacts Found in '{city}': {len(found_contacts)}")
+            print(f"\nTotal Contacts Found in '{self.city}': {len(found_contacts)}")
             for address_book_name , contact in found_contacts:
                 print(f"\nAddress Book: {address_book_name}")
                 contact_info = vars(contact)
                 for key , value in contact_info.items():
                     print(f"{key}: {value}")
-                print(f"\n {'-' * 30}")
+                print(f"\n{'-' * 30}")

@@ -12,7 +12,6 @@ def main():
     print("\nWelcome to the Address Book System!")
 
     Mainbook = AddressBookMain()
-    Mainbook = SearchPerson()
 
     while True:
         print("\nOptions: ")
@@ -45,7 +44,8 @@ def main():
 
         elif choice == "5":
             city = input("Enter the city name to search contacts: ").strip()
-            Mainbook.search_person(city)
+            Mainbook = SearchPerson(city , Mainbook)
+            Mainbook.search_person()
 
         elif choice =="6":
             exit("\nExiting the program, Goodbye!!!.....")
