@@ -1,4 +1,3 @@
-import csv
 import os
 from contacts import Contact
 
@@ -6,36 +5,37 @@ class AddressBook:
     def __init__(self, name):
         self.name = name
         self.contacts = {}
-        self.filename = f"data/csv/{name}.csv"  # Unique CSV for each address book
+        self.filename = f"data/txt/{name}.txt"
 
-        # Ensure the directory structure exists
         os.makedirs(os.path.dirname(self.filename), exist_ok=True)
-
-        self.load_from_file()  # Load contacts when initializing
+        self.load_from_file()
 
     def save_to_file(self):
-        """Saves all contacts to the CSV file."""
-        with open(self.filename, mode="w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["First Name", "Last Name", "Address", "City", "State", "Zip Code", "Phone Number", "Email"])
+        """Saves all contacts to a CSV file."""
+        with open(self.filename, mode="w") as file:
             for contact in self.contacts.values():
-                writer.writerow([contact.first_name, contact.last_name, contact.address,
-                                 contact.city, contact.state, contact.zip_code,
-                                 contact.phone_number, contact.email])
+                file.write(f"{contact.first_name},{contact.last_name},"
+                           f"{contact.address},{contact.city},{contact.state},"
+                           f"{contact.zip_code},"
+                           f"{contact.phone_number},"
+                           f"{contact.email}\n")
         print(f"\nContacts saved to '{self.filename}'.")
 
     def load_from_file(self):
-        """Loads contacts from the CSV file if it exists."""
+        """Loads contacts from a TXT file if it exists."""
         if not os.path.exists(self.filename):
             print(f"\nNo existing contacts found for '{self.name}'. Starting fresh.")
             return
 
-        with open(self.filename, mode="r", newline="") as file:
-            reader = csv.reader(file)
-            next(reader, None)  # Skip header row
-            for row in reader:
-                if len(row) == 8:
-                    contact = Contact(*row)
+        with open(self.filename, mode="r") as file:
+            lines = file.readlines()
+            if len(lines) <= 1:
+                return  # Only header exists, no contacts
+
+            for line in lines[1:]:  # Skip header row
+                data = line.strip().split(",")
+                if len(data) == 8:
+                    contact = Contact(*data)
                     self.contacts[contact.full_name] = contact
         print(f"\nContacts loaded from '{self.filename}'.")
 
