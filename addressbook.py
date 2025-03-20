@@ -1,10 +1,33 @@
 from contacts import Contact
 
-
 class AddressBook:
-    def __init__(self , name):
+    def __init__(self, name, filename="address_book.txt"):
         self.name = name
         self.contacts = {}
+        self.filename = filename
+        self.load_from_file()  # Load contacts when initializing
+
+    def save_to_file(self):
+        """Saves all contacts to a text file."""
+        with open(self.filename, "w") as file:
+            for contact in self.contacts.values():
+                file.write(f"{contact.first_name},{contact.last_name},{contact.address},"
+                           f"{contact.city},{contact.state},{contact.zip_code},"
+                           f"{contact.phone_number},{contact.email}\n")
+        print(f"\nContacts saved to '{self.filename}'.")
+
+    def load_from_file(self):
+        """Loads contacts from a text file into the address book."""
+        try:
+            with open(self.filename, "r") as file:
+                for line in file:
+                    data = line.strip().split(",")
+                    if len(data) == 8:
+                        contact = Contact(*data)
+                        self.contacts[contact.full_name] = contact
+            print(f"\nContacts loaded from '{self.filename}'.")
+        except FileNotFoundError:
+            print("\nNo saved contacts found. Starting fresh.")
 
 
     def add_contact(self,  contact):
